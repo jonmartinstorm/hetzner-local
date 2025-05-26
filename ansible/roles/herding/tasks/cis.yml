@@ -1,0 +1,14 @@
+- name: CIS Nettverk og sysctl
+  import_tasks: cis_sysctl.yml
+
+- name: CIS Systembrukere
+  import_tasks: cis_users.yml
+
+- name: CIS Cron og at begrensninger
+  import_tasks: cis_cron.yml
+
+- name: CIS Logging og loggrotasjon
+  import_tasks: cis_logging.yml
+
+- name: CIS Logging og loggrotasjon 2
+  import_tasks: cis_auditd.yml

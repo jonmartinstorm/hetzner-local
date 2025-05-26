@@ -1,0 +1,13 @@
+- name: Begrens cron- og at-tilgang
+  copy:
+    dest: /etc/cron.allow
+    content: "root\n"
+    mode: "0600"
+
+- name: Fjern at.deny og cron.deny
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /etc/at.deny
+    - /etc/cron.deny

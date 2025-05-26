@@ -1,0 +1,9 @@
+- name: Deaktiver systembrukere som ikke trengs
+  user:
+    name: "{{ item }}"
+    shell: /usr/sbin/nologin
+    password_lock: yes
+  loop:
+    - games
+    - irc
+    - nobody

@@ -1,0 +1,30 @@
+- name: Sørg for at auditd er installert
+  apt:
+    name: auditd
+    state: present
+
+- name: Kopier audit.rules til /etc/audit/rules.d
+  copy:
+    src: audit.rules
+    dest: /etc/audit/rules.d/audit.rules
+    owner: root
+    group: root
+    mode: "0600"
+
+- name: Sett auditd loggrotasjon og lagringsbegrensning
+  lineinfile:
+    path: /etc/audit/auditd.conf
+    regexp: "^{{ item.key }} *=.*"
+    line: "{{ item.key }} = {{ item.value }}"
+  loop:
+    - { key: "max_log_file", value: "20" }
+    - { key: "num_logs", value: "5" }
+    - { key: "max_log_file_action", value: "ROTATE" }
+    - { key: "space_left_action", value: "SYSLOG" }
+    - { key: "admin_space_left_action", value: "SUSPEND" }
+
+- name: Restart auditd med nye regler og begrensning
+  service:
+    name: auditd
+    state: restarted
+    enabled: true

@@ -1,0 +1,8 @@
+- name: Kjør kun CIS-hardening
+  hosts: all
+  become: yes
+  tasks:
+    - name: Kjør kun cis.yml i rollen herding
+      import_role:
+        name: herding
+        tasks_from: cis.yml

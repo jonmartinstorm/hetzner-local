@@ -1,0 +1,29 @@
+# Reset existing rules
+-D
+
+# Buffer size
+-b 8192
+
+# Failure mode: 1 = halt on failure
+-f 1
+
+# Log sudo
+-w /usr/bin/sudo -p x -k exec
+
+# Log ssh authentication
+-w /var/log/auth.log -p wa -k auth
+
+# Track changes to system binaries
+-w /bin -p wa -k binaries
+-w /sbin -p wa -k binaries
+-w /usr/bin -p wa -k binaries
+-w /usr/sbin -p wa -k binaries
+
+# Watch for changes to critical system files
+-w /etc/passwd -p wa -k etc-watch
+-w /etc/group -p wa -k etc-watch
+-w /etc/shadow -p wa -k etc-watch
+-w /etc/ssh/sshd_config -p wa -k ssh-config
+
+# Track kernel module loading/unloading
+-a always,exit -F arch=b64 -S init_module,delete_module -k kernel-module
