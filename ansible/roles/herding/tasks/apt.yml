@@ -1,0 +1,18 @@
+- name: Sjekk at alt er oppdatert
+  apt:
+    update_cache: yes
+    upgrade: dist
+    autoremove: yes
+
+- name: Installer unattended-upgrades
+  apt:
+    name: unattended-upgrades
+    state: present
+
+- name: Aktiver automatisk sikkerhetsoppdatering
+  copy:
+    src: 50unattended-upgrades
+    dest: /etc/apt/apt.conf.d/50unattended-upgrades
+    owner: root
+    group: root
+    mode: "0644"

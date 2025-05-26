@@ -1,0 +1,15 @@
+- name: Sjekk at fail2ban er innstallert
+  apt:
+    name: fail2ban
+    state: present
+
+- name: Sjekk at auditd er innstallert
+  apt:
+    name: auditd
+    state: present
+
+- name: Enable auditd
+  service:
+    name: auditd
+    state: started
+    enabled: yes

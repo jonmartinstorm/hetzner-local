@@ -1,0 +1,15 @@
+- name: Sett opp UFW
+  apt:
+    name: ufw
+    state: present
+
+- name: Default deny alle inkommende trafikk
+  ufw:
+    state: enabled
+    policy: deny
+    direction: incoming
+
+- name: Tillat SSH (port 22)
+  ufw:
+    rule: allow
+    port: "22"
