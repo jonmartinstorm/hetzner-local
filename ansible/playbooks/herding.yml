@@ -1,0 +1,5 @@
+- name: Herding av debian servere
+  hosts: debian_servers
+  become: yes
+  roles:
+    - herding

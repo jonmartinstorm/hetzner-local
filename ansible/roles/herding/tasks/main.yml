@@ -1,0 +1,44 @@
+- name: Sjekk at alt er oppdatert
+  apt:
+    update_cache: yes
+    upgrade: dist
+    autoremove: yes
+
+- name: Ta vekk root SSH login
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^PermitRootLogin"
+    line: "PermitRootLogin no"
+  notify: Restart SSH
+
+- name: Sett opp UFW
+  apt:
+    name: ufw
+    state: present
+
+- name: Default deny alle inkommende trafikk
+  ufw:
+    state: enabled
+    policy: deny
+    direction: incoming
+
+- name: Tillat SSH (port 22)
+  ufw:
+    rule: allow
+    port: "22"
+
+- name: Sjekk at fail2ban er innstallert
+  apt:
+    name: fail2ban
+    state: present
+
+- name: Sjekk at auditd er innstallert
+  apt:
+    name: auditd
+    state: present
+
+- name: Enable auditd
+  service:
+    name: auditd
+    state: started
+    enabled: yes
